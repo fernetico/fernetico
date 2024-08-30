@@ -1,0 +1,127 @@
+[gd_scene load_steps=19 format=3 uid="uid://csxm3ihk41xo5"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_762n0"]
+[ext_resource type="PackedScene" uid="uid://dn072j6melmed" path="res://scenes/bullet_sword.tscn" id="2_ub0q2"]
+[ext_resource type="Texture2D" uid="uid://nl4njvma7ppp" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/idle/player-idle-1.png" id="3_dn4ui"]
+[ext_resource type="PackedScene" uid="uid://yem81uxfvx06" path="res://scenes/bullet_thor.tscn" id="3_erpxm"]
+[ext_resource type="Texture2D" uid="uid://dqihhxsmt3ues" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-1.png" id="4_fy103"]
+[ext_resource type="Texture2D" uid="uid://dvwdaeeext3mm" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/idle/player-idle-2.png" id="4_h3tpv"]
+[ext_resource type="Texture2D" uid="uid://c65dsxd3ofgh5" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/idle/player-idle-3.png" id="5_72a6r"]
+[ext_resource type="Texture2D" uid="uid://bkdlnqa8q7vwf" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-2.png" id="5_h0vtj"]
+[ext_resource type="Texture2D" uid="uid://byxx1dj36bddk" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/idle/player-idle-4.png" id="6_5k5a6"]
+[ext_resource type="Texture2D" uid="uid://0f0aqu5rr2kx" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-3.png" id="6_p7mqy"]
+[ext_resource type="Texture2D" uid="uid://bo8n1fquwc21f" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-4.png" id="7_wmmdq"]
+[ext_resource type="Texture2D" uid="uid://cu1b2aady53m0" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-5.png" id="8_paiso"]
+[ext_resource type="Texture2D" uid="uid://n0xbymo368ki" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/player/run/player-run-6.png" id="9_08gcg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vkypv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dn4ui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_h3tpv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_72a6r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5k5a6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fy103")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h0vtj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_p7mqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wmmdq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_paiso")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_08gcg")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_otffy"]
+radius = 5.0
+height = 18.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v71vy"]
+bg_color = Color(0.118581, 0.118581, 0.118581, 1)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owvjp"]
+bg_color = Color(0.987617, 0, 0.256937, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fs5vi"]
+radius = 911.044
+
+[node name="Player" type="CharacterBody2D" groups=["player_group"]]
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_762n0")
+bullet_sword_scene = ExtResource("2_ub0q2")
+bullet_thor_scene = ExtResource("3_erpxm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vkypv")
+animation = &"run"
+autoplay = "idle"
+frame_progress = 0.759265
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_otffy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -15.0
+offset_top = 20.0
+offset_right = 14.0
+offset_bottom = 24.0
+theme_override_styles/background = SubResource("StyleBoxFlat_v71vy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_owvjp")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="LimitEnemy" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimitEnemy"]
+shape = SubResource("CircleShape2D_fs5vi")
+
+[node name="TimerSwormArm" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerThorArm" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="area_exited" from="LimitEnemy" to="." method="_on_limit_enemy_area_exited"]
+[connection signal="timeout" from="TimerSwormArm" to="." method="_on_timer_sworm_arm_timeout"]
+[connection signal="timeout" from="TimerThorArm" to="." method="_on_timer_thor_arm_timeout"]

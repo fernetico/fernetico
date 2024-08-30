@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dvw3s1ebmw5tv"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_s1a68"]
+[ext_resource type="Texture2D" uid="uid://t5lh3kxuh3yf" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/eagle/eagle-attack-1.png" id="2_yslrv"]
+[ext_resource type="Texture2D" uid="uid://bputo8kxi5ji3" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/eagle/eagle-attack-2.png" id="3_hbukk"]
+[ext_resource type="Texture2D" uid="uid://dji4akg4pbl2" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/eagle/eagle-attack-3.png" id="4_eaufu"]
+[ext_resource type="Texture2D" uid="uid://csqorb4t2k7l4" path="res://assets/art/Sunny Land Collection Files/Assets/Packs/Sunnyland/sprites/eagle/eagle-attack-4.png" id="5_3s6xp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n61h7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yslrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hbukk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_eaufu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_3s6xp")
+}],
+"loop": true,
+"name": &"eagle",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xk6db"]
+radius = 15.0333
+
+[node name="Enemy" type="Area2D" groups=["enemy_group"]]
+collision_layer = 2
+script = ExtResource("1_s1a68")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n61h7")
+animation = &"eagle"
+autoplay = "eagle"
+frame_progress = 0.13538
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xk6db")
+
+[node name="TimerDamage" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(218.5, 147)
+scale = Vector2(74.15, 52.3)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="TimerDamage" to="." method="_on_timer_damage_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

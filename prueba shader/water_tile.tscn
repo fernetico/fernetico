@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://vap3w0mntt01"]
+
+[ext_resource type="Shader" path="res://water/water.gdshader" id="1_hbgjx"]
+[ext_resource type="Texture2D" uid="uid://ccg1okcam8ft" path="res://water/water_tile.png" id="2_43gx8"]
+[ext_resource type="Shader" path="res://Icon.gdshader" id="3_5xfx5"]
+[ext_resource type="Texture2D" uid="uid://bjw2paexf3vbq" path="res://water/light.png" id="4_w42nn"]
+[ext_resource type="Script" path="res://luz.gd" id="5_mdjqr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5hdc6"]
+shader = ExtResource("1_hbgjx")
+shader_parameter/tile_factor = 1.0
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/time_factor = Vector2(2, 3)
+shader_parameter/offset_factor = Vector2(5, 2)
+shader_parameter/amplitude = Vector2(0.05, 0.05)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k15aa"]
+shader = ExtResource("3_5xfx5")
+
+[sub_resource type="Animation" id="Animation_j67wk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(18.7673, -14.7322)]
+}
+
+[sub_resource type="Animation" id="Animation_k6455"]
+resource_name = "new_animation"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.1, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(129.073, 74.872), Vector2(-161.501, -76.0829)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j404m"]
+_data = {
+"RESET": SubResource("Animation_j67wk"),
+"new_animation": SubResource("Animation_k6455")
+}
+
+[node name="WaterTile" type="Sprite2D"]
+material = SubResource("ShaderMaterial_5hdc6")
+position = Vector2(272, 153)
+scale = Vector2(1.801, 1.24694)
+texture = ExtResource("2_43gx8")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_k15aa")
+use_parent_material = true
+position = Vector2(18.7673, -14.7322)
+rotation = -0.270526
+scale = Vector2(0.860968, 1.40669)
+skew = 0.944223
+color = Color(0, 0.901961, 0.811765, 1)
+energy = 0.54
+texture = ExtResource("4_w42nn")
+texture_scale = 1.55
+
+[node name="luz" type="AnimationPlayer" parent="PointLight2D"]
+process_mode = 3
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_j404m")
+}
+movie_quit_on_finish = true
+script = ExtResource("5_mdjqr")
