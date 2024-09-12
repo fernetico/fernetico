@@ -384,7 +384,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("69_78i37")
 }],
-"loop": true,
+"loop": false,
 "name": &"throw",
 "speed": 15.0
 }]
@@ -412,9 +412,10 @@ script = ExtResource("1_o8q6v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_473mp")
-animation = &"hit"
+animation = &"throw"
 autoplay = "idle"
-frame_progress = 0.224707
+frame = 10
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-5.5, 3.5)

@@ -1,7 +1,8 @@
 extends RigidBody2D
 class_name Bomb
 
-@export var damage := 50
+@export var damage := 25
+@export var explosion_force := 1000 
 var is_exploding: bool = false
 
 func _ready() -> void:
@@ -28,4 +29,7 @@ func _on_timer_timeout() -> void:
 func _on_body_entered(body: Node) -> void:
 	if body is Player:
 		body.decrease_life(damage)
+		# Aplicar un impulso en la dirección opuesta a la bomba
+		var direction = (body.global_position - global_position).normalized()
+		body.apply_explosion_impact(direction * explosion_force)
 		print("daño al player:", damage)

@@ -12,12 +12,25 @@ var SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 var jump_count = 0
 
+#variables de knockback
+var knockback_velocity: Vector2 = Vector2.ZERO
+var knockback_timer: Timer
+
 func _ready() -> void:
 	$ProgressBarLife.value = life
+	knockback_timer = Timer.new()
+	add_child(knockback_timer)
+	knockback_timer.timeout.connect(_on_knockback_end)
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
+	
+	# Lógica regular de movimiento
+	if knockback_velocity.length() > 0:
+		move_and_slide()
+		velocity = knockback_velocity # Asignar la fuerza de retroceso al vector de velocidad
+		return # Saltar lógica normal mientras se aplica el knockback
 	
 	spawn_bomb()
 	
@@ -116,3 +129,11 @@ func death():
 	await get_tree().create_timer(2).timeout
 	$Sprite2DBomb.visible = false
 	print('me mori')
+
+func apply_explosion_impact(impact_force: Vector2) -> void:
+	knockback_velocity = impact_force
+	knockback_timer.start(0.3) # La duración del "knockback"
+	print("Impacto de explosión recibido con fuerza:", impact_force)
+
+func _on_knockback_end() -> void:
+	knockback_velocity = Vector2.ZERO
