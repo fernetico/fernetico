@@ -1,0 +1,113 @@
+[gd_scene load_steps=23 format=3 uid="uid://dmgcj2v023o2x"]
+
+[ext_resource type="Script" path="res://scripts/bomb.gd" id="1_08x7d"]
+[ext_resource type="Texture2D" uid="uid://bry4fp2h1imdd" path="res://art/1-BOMB/3-Explotion/1.png" id="1_ss5p5"]
+[ext_resource type="Texture2D" uid="uid://bp6c4dysl3egp" path="res://art/1-BOMB/3-Explotion/2.png" id="2_2p0bs"]
+[ext_resource type="Texture2D" uid="uid://iftbnymxvt7i" path="res://art/1-BOMB/3-Explotion/3.png" id="3_08d02"]
+[ext_resource type="Texture2D" uid="uid://bcnhl0ikptwx2" path="res://art/1-BOMB/3-Explotion/4.png" id="4_8v6vt"]
+[ext_resource type="Texture2D" uid="uid://0w0gmbce0vu4" path="res://art/1-BOMB/3-Explotion/5.png" id="5_rtmpp"]
+[ext_resource type="Texture2D" uid="uid://bhqw4xa1oemfk" path="res://art/1-BOMB/3-Explotion/6.png" id="6_d86jo"]
+[ext_resource type="Texture2D" uid="uid://6xkoa3ly0ibb" path="res://art/1-BOMB/3-Explotion/7.png" id="7_ixn7u"]
+[ext_resource type="Texture2D" uid="uid://bnfoane7476oa" path="res://art/1-BOMB/3-Explotion/8.png" id="8_k0ebd"]
+[ext_resource type="Texture2D" uid="uid://b8uysh4mfk078" path="res://art/1-BOMB/3-Explotion/9.png" id="9_1uuaa"]
+[ext_resource type="Texture2D" uid="uid://cetfm0gvfl788" path="res://art/1-BOMB/2-Bomb On/1.png" id="11_3l287"]
+[ext_resource type="Texture2D" uid="uid://xebqirqoy4hk" path="res://art/1-BOMB/2-Bomb On/2.png" id="12_st2h3"]
+[ext_resource type="Texture2D" uid="uid://dq3cbv5bclamf" path="res://art/1-BOMB/2-Bomb On/3.png" id="13_lqmcg"]
+[ext_resource type="Texture2D" uid="uid://du2feb33l0mg8" path="res://art/1-BOMB/2-Bomb On/4.png" id="14_wjk7f"]
+[ext_resource type="Texture2D" uid="uid://cl0uqdoki4wq4" path="res://art/1-BOMB/2-Bomb On/5.png" id="15_yhh1t"]
+[ext_resource type="Texture2D" uid="uid://t1y5gljll30n" path="res://art/1-BOMB/2-Bomb On/6.png" id="16_y7url"]
+[ext_resource type="Texture2D" uid="uid://db16cjf8qm28a" path="res://art/1-BOMB/2-Bomb On/7.png" id="17_wk0so"]
+[ext_resource type="Texture2D" uid="uid://cpht2qkv7xqdg" path="res://art/1-BOMB/2-Bomb On/8.png" id="18_hpuv8"]
+[ext_resource type="Texture2D" uid="uid://ddmoo1ye06tlm" path="res://art/1-BOMB/2-Bomb On/9.png" id="19_fsenx"]
+[ext_resource type="Texture2D" uid="uid://buhclx4xnwky6" path="res://art/1-BOMB/2-Bomb On/10.png" id="20_52nd2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ajfut"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ss5p5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2p0bs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_08d02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8v6vt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rtmpp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_d86jo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ixn7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_k0ebd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1uuaa")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_3l287")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_st2h3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_lqmcg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wjk7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_yhh1t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_y7url")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_wk0so")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_hpuv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_fsenx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_52nd2")
+}],
+"loop": true,
+"name": &"on",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5fad4"]
+radius = 15.0
+
+[node name="Bomb" type="RigidBody2D"]
+script = ExtResource("1_08x7d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -17)
+sprite_frames = SubResource("SpriteFrames_ajfut")
+animation = &"on"
+autoplay = "on"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_5fad4")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

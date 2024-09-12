@@ -69,3 +69,17 @@ func create_bullet_thor():
 
 func _on_timer_thor_arm_timeout() -> void: #señal echa con el timer cada 5 segundos
 	create_bullet_thor()
+
+#func _on_limit_enemy_body_entered(body: Node2D) -> void:
+	#if body is Enemy:
+		#pass
+
+#func shake_camera(duration: float = 0.5, intensity: float = 10.0):
+	#var original_offset = offset
+	#var elapsed_time = 0.0
+#
+	#while elapsed_time < duration:
+		#offset = original_offset + Vector2(randf_range(-intensity, intensity), randf_range(-intensity, intensity))
+		#elapsed_time += get_process_delta_time()
+	#
+	#offset = original_offset  # Restaurar la posición original después del temblor

@@ -122,6 +122,8 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="area_exited" from="LimitEnemy" to="." method="_on_limit_enemy_area_exited"]
+[connection signal="body_entered" from="LimitEnemy" to="." method="_on_limit_enemy_body_entered"]
 [connection signal="timeout" from="TimerSwormArm" to="." method="_on_timer_sworm_arm_timeout"]
 [connection signal="timeout" from="TimerThorArm" to="." method="_on_timer_thor_arm_timeout"]

@@ -5,11 +5,9 @@ signal hit
 @export var speed = 400
 var screen_size
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("move_right"):
@@ -46,9 +44,10 @@ func _on_body_entered(body: Node2D) -> void:
 	hide() #desaparece despues de golpearlo
 	hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true) #si algo le pega deshabilita la colision para que no le pegue 2 veces
-	
-func start():
-	#position = pos
+	#El uso de set_deferred() nos permite hacer que Godot espere para desactivar la forma hasta que sea seguro hacerlo.
+
+func start(pos): #función que llamaremos para reiniciarlo cuando comenzamos un juego nuevo.
+	position = pos
 	show()
 	$CollisionShape2D.disabled = false
 	

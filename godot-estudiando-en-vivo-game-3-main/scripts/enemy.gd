@@ -23,12 +23,14 @@ func _on_body_entered(body: Node2D) -> void:
 		body.decrease_life(damage)
 		$TimerDamage.start()
 
+
 func _on_body_exited(body: Node2D) -> void:
 	$TimerDamage.stop()
 
 func _on_timer_damage_timeout() -> void:
 	player.decrease_life(damage)
 
+	
 # Alternativa #1: Esto nos sirve para destruir todo lo que esté fuera de este rango 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	print("eliminar enemigo screen_notifier")
