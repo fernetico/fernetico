@@ -1,7 +1,7 @@
 extends RigidBody2D
 class_name Bomb
 
-@export var damage := 25
+@export var damage := 50
 var is_exploding: bool = false
 
 func _ready() -> void:

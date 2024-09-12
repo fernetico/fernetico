@@ -5,7 +5,7 @@ var bomb = preload("res://scenes/bomb.tscn")
 var can_shoot: bool = true
 var bomb_speed := 1000
 @export var life = 100
-
+var is_dead : bool = false
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var SPEED = 300.0
@@ -16,6 +16,9 @@ func _ready() -> void:
 	$ProgressBarLife.value = life
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+	
 	spawn_bomb()
 	
 	if not is_on_floor():
@@ -36,10 +39,7 @@ func _physics_process(delta: float) -> void:
 	if direction != 0:
 		velocity.x = direction * SPEED
 		$AnimatedSprite2D.flip_h = direction < 0
-		#if direction < 0:
-			#$Bullet.position.x = -26
-		#else:
-			#$Bullet.position.x = 26
+
 		if is_on_floor():
 			$AnimatedSprite2D.play("run")
 		else:
@@ -79,8 +79,9 @@ func bomb_position():
 
 func spawn_bomb():
 	if can_shoot:
+		$Sprite2DBomb.visible = true
 		if Input.is_action_pressed("shoot"):
-			$AnimatedSprite2D.play("throw")
+
 			var bomb_instance = bomb.instantiate() as RigidBody2D
 			var mouse_position = get_global_mouse_position()
 			var direction = (mouse_position - global_position).normalized()
@@ -93,8 +94,10 @@ func spawn_bomb():
 			get_parent().add_child(bomb_instance)
 			
 			can_shoot = false
+			$Sprite2DBomb.visible = false
 			await get_tree().create_timer(4).timeout
 			can_shoot = true
+			$Sprite2DBomb.visible = true
 
 func decrease_life(value):
 	life -= value
@@ -103,4 +106,13 @@ func decrease_life(value):
 		death()
 
 func death():
+	is_dead = true
+	velocity = Vector2.ZERO
+	$AnimatedSprite2D.play("hit_die")
+	await get_tree().create_timer(1).timeout
+	$AnimatedSprite2D.play("die")
+	$ProgressBarLife.visible = false
+	$Sprite2DBomb.visible = false
+	await get_tree().create_timer(2).timeout
+	$Sprite2DBomb.visible = false
 	print('me mori')

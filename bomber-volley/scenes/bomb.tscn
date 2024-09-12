@@ -112,10 +112,8 @@ script = ExtResource("1_08x7d")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -16)
 sprite_frames = SubResource("SpriteFrames_ajfut")
-animation = &"explode"
+animation = &"on"
 autoplay = "on"
-frame = 9
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
